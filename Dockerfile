@@ -1,14 +1,10 @@
-FROM node:8.11-alpine
+FROM node:16.17
+RUN mkdir /app
+WORKDIR /app
+COPY ./src ./
 
-RUN mkdir -p /app/code
-WORKDIR /app/code
-EXPOSE 8080
+RUN npm install
 
-COPY src/package.json src/package-lock.json /app/code/
-RUN npm i
-
-COPY src /app/code
-COPY entry-point.sh v.txt /
-RUN chmod +x /entry-point.sh
-
-ENTRYPOINT ["/entry-point.sh"] 
+RUN echo "#!/bin/bash \n npm start" > ./entry-point.sh
+RUN chmod +x ./entry-point.sh
+ENTRYPOINT ./entry-point.sh

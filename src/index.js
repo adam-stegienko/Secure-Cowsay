@@ -6,8 +6,7 @@ const cowsay = require('cowsay');
 const request = require('request');
 const cheerio = require('cheerio');
 const compression = require('compression');
-const fs = require('fs');
-const ver = fs.readFileSync("/v.txt", "utf8");
+
 const app = exp();
 
 // gzip
@@ -40,9 +39,9 @@ app.get('/', function (req, res) {
 
     var $ = cheerio.load(body);
     const st = $('h2', '#quote').text().replace(/\"/g, '').replace(/\_/g, '')
-    const w = ver + `
-
+    const w = `
 Deepak Chopra Quote:
+
 " ${st}"
 
     `;
