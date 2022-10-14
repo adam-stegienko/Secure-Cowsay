@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  cowsay_server:
+    container_name: cowsay_server
+    build:
+      context: .
+    restart: always
+    networks:
+      - reverse
+
+  reverse_nginx:
+    container_name: reverse_nginx
+    image: nginx:1.23
+    networks:
+      - reverse
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./reverse_proxy/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./reverse_proxy/static:/usr/share/nginx/html
+      # - ./reverse_proxy/tls/adam2cowsay.hopto.org.crt:/etc/ssl/adam2cowsay.hopto.org.crt
+      # - ./reverse_proxy/tls/adam2cowsay.hopto.org.key:/etc/ssl/adam2cowsay.hopto.org.key
+    restart: always
+    depends_on:
+      - cowsay_server
+
+  
+networks:
+  reverse:
+    driver: bridge
