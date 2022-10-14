@@ -20,8 +20,6 @@ services:
     volumes:
       - ./reverse_proxy/conf/nginx.conf:/etc/nginx/nginx.conf
       - ./reverse_proxy/static:/usr/share/nginx/html
-      # - ./reverse_proxy/tls/adam2cowsay.hopto.org.crt:/etc/ssl/adam2cowsay.hopto.org.crt
-      # - ./reverse_proxy/tls/adam2cowsay.hopto.org.key:/etc/ssl/adam2cowsay.hopto.org.key
     restart: always
     depends_on:
       - cowsay_server
